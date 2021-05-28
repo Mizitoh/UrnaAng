@@ -11,10 +11,10 @@ namespace UrnaAngular.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class CandidatoController : ControllerBase
+    public class CandidatosController : ControllerBase
     {
         private readonly DataContext _context;
-        public CandidatoController(DataContext context)
+        public CandidatosController(DataContext context)
         {
             _context = context;
         }
