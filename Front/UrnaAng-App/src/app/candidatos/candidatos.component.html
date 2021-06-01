@@ -1,8 +1,29 @@
 <hr>
 
-<div *ngFor = "let item of candidatos">
-  <p><b>Nome do Candidato: </b>{{item.nomePresidente}}</p>
-  <p><b>Nome do Vice: </b>{{item.nomeVice}}</p>
-  <hr>
+<div class="form-inline">
+  <div class ="form-group class mb-2">
+    <input type="text" class="form-control mr-2" placeholder="buscar" [(ngModel)]="filtroLista">
+    <button class="btn btn-outline-success">Buscar</button>
+  </div>
 </div>
-
+<!--<h6>Filtro: {{candidatosFiltrados}}</h6>-->
+<table class="table table-striped">
+  <thead class="thead-dark">
+    <tr>
+      <th>Nome do Presidente</th>
+      <th>Nome do vice</th>
+      <th>Partido</th>
+      <th>Data de Cadastro</th>
+      <th>Legenda</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of candidatos">
+      <td>{{item.nomePresidente}}</td>
+      <td>{{item.nomeVice}}</td>
+      <td>{{item.partido}}</td>
+      <td>{{item.dataCadastro}}</td>
+      <td>{{item.legenda}}</td>
+    </tr>
+  </tbody>
+</table>

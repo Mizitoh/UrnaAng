@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using UrnaAngular.Data;
+using UrnaAngular.Data.Repositories;
 
 namespace UrnaAngular
 {
@@ -30,7 +31,9 @@ namespace UrnaAngular
         {
             services.AddDbContext<DataContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("VotosAPIContext")));
-            services.AddControllers();
+            services.AddControllers()
+                .AddNewtonsoftJson(option => option.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+            services.AddScoped<IRepository, Repository>();
             services.AddCors();
             services.AddSwaggerGen(c =>
             {

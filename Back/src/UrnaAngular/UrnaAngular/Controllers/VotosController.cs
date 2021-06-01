@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,14 +7,16 @@ using UrnaAngular.Data;
 using UrnaAngular.Data.Repositories;
 using UrnaAngular.Models;
 
+// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+
 namespace UrnaAngular.Controllers
 {
+    [Route("api/[controller]")]
     [ApiController]
-    [Route("[controller]")]
-    public class CandidatosController : ControllerBase
+    public class VotosController : ControllerBase
     {
         private readonly IRepository _repository;
-        public CandidatosController(IRepository repository)
+        public VotosController(IRepository repository)
         {
             _repository = repository;
         }
@@ -25,7 +26,7 @@ namespace UrnaAngular.Controllers
         {
             try
             {
-                var result = await _repository.GetAllCandidatosAsync();
+                var result = await _repository.GetAllVotosAsync();
                 return Ok(result);
             }
             catch (Exception ex)
@@ -35,12 +36,12 @@ namespace UrnaAngular.Controllers
             }
         }
 
-        [HttpGet("{candidatoId}")]
-        public async Task<IActionResult> GetCandidatoAsyncById(int candidatoId)
+        [HttpGet("{legenda}")]
+        public async Task<IActionResult> GetVotosByLegendaAsync(int legenda)
         {
             try
             {
-                var result = await _repository.GetCandidatoAsyncById(candidatoId);
+                var result = await _repository.GetVotosByLegendaAsync(legenda);
                 return Ok(result);
             }
             catch (Exception ex)
@@ -51,13 +52,13 @@ namespace UrnaAngular.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] Candidato cd)
+        public async Task<IActionResult> Post([FromBody] Voto vt)
         {
             try
             {
-                _repository.Add(cd);
-                if(await _repository.SaveChangesAsync())
-                { return Ok(cd); }
+                _repository.Add(vt);
+                if (await _repository.SaveChangesAsync())
+                { return Ok(vt); }
             }
             catch (Exception ex)
             {
@@ -65,18 +66,6 @@ namespace UrnaAngular.Controllers
                 throw;
             }
             return BadRequest("Erro não esperado, você que lute!");
-        }
-
-        [HttpPut("{id}")]
-        public IEnumerable<Candidato> Put()
-        {
-            return null;
-        }
-
-        [HttpDelete("{id}")]
-        public IEnumerable<Candidato> Delete()
-        {
-            return null;
         }
     }
 }
